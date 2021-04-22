@@ -16,7 +16,7 @@ const name = defaultSettings.title || 'ferry' // page title
 const port = process.env.port || process.env.npm_config_port || 9527 // dev port
 
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
-
+console.log(process.env)
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -85,7 +85,12 @@ module.exports = {
     config
       // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
-        config => config.devtool('cheap-source-map')
+        config => {
+          config.devtool('cheap-source-map')
+          config
+            .plugin('webpack-bundle-analyzer')
+            .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
+        }
       )
 
     config
